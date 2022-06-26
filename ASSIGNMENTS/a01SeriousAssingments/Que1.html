@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignemnt 1</title>
+    <script>
+       
+       window.addEventListener('DOMContentLoaded',()=>{
+        let A =[11,12,13,14,15,16,17,18,19,20];
+       
+   
+
+       const input1 = document.querySelector('#input1');
+       input1.addEventListener('blur',()=>{
+        let num = document.querySelector('#input1').value;
+       let output = findnNum(num);
+       if(output)
+       {
+        console.log("Number Found");
+        document.querySelector('#msg').innerHTML="Congrats Number Found";
+        document.querySelector('#add').disabled=true;
+        document.querySelector('#edit').disabled=false;
+        document.querySelector('#delete').disabled=false;
+        document.querySelector('#Viewall').disabled=true;
+        document.querySelector('#odd').disabled=true;
+       }
+       else{
+        console.log("Number not Found");
+        document.querySelector('#msg').innerHTML=" Number Not Found";
+        document.querySelector('#add').disabled=false;
+        document.querySelector('#edit').disabled=true;
+        document.querySelector('#delete').disabled=true;
+        document.querySelector('#Viewall').disabled=true;
+        document.querySelector('#odd').disabled=true;
+       }
+       });
+
+       // add element in array
+       const add1 = document.querySelector('#add');
+       add1.addEventListener('click',()=>{
+        let element = document.querySelector("#input1");
+        A.push(element.value);
+        console.log("Element is added");
+        document.querySelector('#msg').innerHTML=" Element is added";
+        document.querySelector('#add').disabled=true;
+        document.querySelector('#edit').disabled=true;
+        document.querySelector('#delete').disabled=true;
+        document.querySelector('#Viewall').disabled=false;
+        document.querySelector('#odd').disabled=false;
+       });
+
+
+       //edit (change element of array)
+       const edit = document.querySelector("#edit");
+       edit.addEventListener('click', ()=>{
+            let newValue =+window.prompt();
+            let status = replaceValue(newValue);
+            if(status)
+            {
+                document.querySelector('#msg').innerHTML=" Element get replace";
+                console.log(A);
+                document.querySelector('#add').disabled=true;
+                document.querySelector('#edit').disabled=true;
+                document.querySelector('#delete').disabled=true;
+                document.querySelector('#Viewall').disabled=false;
+                document.querySelector('#odd').disabled=true;
+
+            }
+            else{
+                document.querySelector('#msg').innerHTML=" Value cannot be repated";
+                console.log(A);
+                document.querySelector('#add').disabled=true;
+                document.querySelector('#edit').disabled=true;
+                document.querySelector('#delete').disabled=true;
+                document.querySelector('#Viewall').disabled=false;
+                document.querySelector('#odd').disabled=true;
+            }
+
+       });
+
+       // Deleting number from array
+       const deletnum = document.querySelector("#delete");
+       deletnum.addEventListener('click', ()=>{
+        let num = document.querySelector('#input1').value;
+        let output = deletevalue(num);
+        if(output)
+        {
+            console.log("value Deleted");
+            console.log(A);
+            document.querySelector('#msg').innerText = "Value Deleted";
+            document.querySelector('#Viewall').disabled = false;
+            document.querySelector('#edit').disabled = true;
+            document.querySelector('#delete').disabled = true;
+        }
+       });
+
+       // view all
+       const viewall = document.querySelector("#Viewall");
+       viewall.addEventListener('click', ()=>{
+       document.querySelector('#msg1').innerText=A;
+       });
+        //odd
+       const odd = document.querySelector("#odd");
+       odd.addEventListener('click', ()=>{
+        let output =oddpos();
+       document.querySelector('#msg1').innerText=output;
+       });
+
+
+
+       function findnNum(x){
+        let output= false;
+        for(let i=0;i<A.length;i++)
+        {
+            if(A[i]==x)
+            {
+                output=true;
+            }
+        }
+        return output;
+       }
+
+       function replaceValue(newVal)
+       {
+        let oldVal = document.querySelector("#input1").value;
+        let status = true;
+        console.log("hello1"+newVal);
+        for(let i=0;i<A.length;i++)
+        {
+            if(A[i]==newVal)
+            {
+                status=false;
+                break;
+            }
+        }
+        if(status)
+        {
+            console.log("hello3");
+            for(let i=0;i<A.length;i++)
+            {
+                if(A[i]==oldVal)
+                {
+                    A[i]=newVal;
+                    break;
+                }
+            }
+        }
+        return status;
+       }
+
+       function deletevalue(num)
+       {
+        let output = false;
+        for(let i=0;i<A.length;i++)
+        {
+            if(A[i]==num)
+            {
+                A.splice(i,1)
+                output=true;
+                break;
+            }
+        }
+           
+        return output;
+       }
+
+       function oddpos()
+       {
+        let output =" ";
+        for(let i=0;i<A.length;i++)
+        {
+            if((i+1)%2==1)
+            {
+                output += A[i]+ " ";
+            }
+        }
+        return output;
+       }
+      
+
+    });
+
+    </script>
+</head>
+<body>
+    <input type="text" id="input1" placeholder="Enter the number">
+    <span id="msg">Hello</span>
+    <br/>
+    <button id="add" disabled>ADD</button>
+    <button id="edit" disabled>Edit</button>
+    <button id="delete" disabled>Delete</button>
+    <button id="Viewall" disabled>View All</button>
+    <button id="odd" disabled>Odd Postition</button>
+    <br/>
+    <span id="msg1"></span>
+</body>
+</html>
